@@ -2,7 +2,7 @@
   <div>
     <div class="login-container">
       <div style="width: 400px" class="login-box">
-        <div style="front-weight:bold;front-size:24px; text-align:center; margin-bottom: 30px">欢 迎 您 注 册</div>
+        <div style="front-weight:bold;front-size:24px; text-align:center; margin-bottom: 30px">注册成为管理员</div>
         <el-form ref="formRef" :model="data.form" :rules="rules">
           <el-form-item prop="username">
             <el-input prefix-icon="User" v-model="data.form.username" placeholder="输入您想设置的管理员账号"/>

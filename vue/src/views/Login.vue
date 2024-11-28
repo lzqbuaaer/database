@@ -1,14 +1,14 @@
 <template>
   <div>
     <div class="login-container">
-      <div style="width: 400px" class="login-box">
+      <div style="width: 550px" class="login-box">
         <div style="front-weight:bold;front-size:24px; text-align:center; margin-bottom: 30px">登录</div>
         <el-form ref="formRef" :model="data.form" :rules="rules">
           <el-form-item prop="username">
-            <el-input prefix-icon="User" v-model="data.form.username" placeholder="输入管理员账号、学生学号或者教师编号" clearable/>
+            <el-input prefix-icon="User" v-model="data.form.username" placeholder="输入管理员账号、学生学号或者教师编号，管理员默认admin" clearable/>
           </el-form-item>
           <el-form-item prop="password">
-            <el-input show-password prefix-icon="Lock" v-model="data.form.password" placeholder="输入密码" clearable/>
+            <el-input show-password prefix-icon="Lock" v-model="data.form.password" placeholder="输入密码，管理员默认admin，其余默认123" clearable/>
           </el-form-item>
           <el-form-item prop="role" >
             <el-select style="width: 100%" v-model="data.form.role">
@@ -19,7 +19,7 @@
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click.native="login">登录</el-button>
-            <el-button type="info" style="margin-left: 63%; " @click.native="resetForm">重置</el-button>
+            <el-button type="info" style="margin-left: 74%; " @click.native="resetForm">重置</el-button>
           </el-form-item>
           <div style="text-align: center; margin-top: 20px">
             <router-link to="/register">没有管理员账号？点击注册</router-link>
