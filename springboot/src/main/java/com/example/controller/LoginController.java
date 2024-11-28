@@ -36,4 +36,14 @@ public class LoginController {
 
         return Result.success(db_Account);
     }
+
+    @PostMapping("/register")
+    public Result register(@RequestBody Account account) {
+        if (RoleEnum.ADMIN.name().equals(account.getRole())) {
+             adminService.register(account);
+        } else {
+            return Result.error("角色错误！只能注册为管理员");
+        }
+        return Result.success();
+    }
 }

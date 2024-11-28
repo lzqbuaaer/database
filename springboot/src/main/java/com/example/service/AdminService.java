@@ -41,4 +41,17 @@ public class AdminService {
         admin.setPassword(MD5Pwd);
         adminMapper.updateByAdmin(admin);
     }
+
+    public void register(Account account){
+        Admin db_Admin= new Admin();
+        if(adminMapper.selectByAdminname(account.getUsername())!=null){
+            throw new CustomException("用户名已存在!");
+        }
+        db_Admin.setUsername(account.getUsername());
+        String MD5Pwd=MD5Utils.getMD5(account.getPassword());
+        db_Admin.setPassword(MD5Pwd);
+        db_Admin.setName("管理员");
+        db_Admin.setRole("ADMIN");
+        adminMapper.insertAdmin(db_Admin);
+    }
 }

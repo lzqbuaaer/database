@@ -12,5 +12,7 @@ public interface AdminMapper {
     Admin selectByAdminname(String username);
     @Update("update tbadmin set password=#{password} where username=#{username}")
     void updateByAdmin(Admin admin);
-
+    // 插入数据
+    @Update("insert into tbadmin(username,password,name,role) values(#{username},#{password},#{name},#{role})")
+    void insertAdmin(Admin admin);
 }
