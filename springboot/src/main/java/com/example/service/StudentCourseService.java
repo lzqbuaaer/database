@@ -32,4 +32,8 @@ public class StudentCourseService {
     }
     public void deleteByScId(Integer scId){studentCourseMapper.deleteByScId(scId);}
     public void addGrade(StudentCourse studentCourse){studentCourseMapper.addGrade(studentCourse);};
+
+    public List<StudentCourse> selectAll(StudentCourse studentCourse) {
+        return studentCourseMapper.selectAll(studentCourse);
+    }
 }

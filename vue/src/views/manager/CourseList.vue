@@ -10,6 +10,9 @@
     </div>
 
     <div class="card" style="margin-bottom: 10px">
+      <div style="margin-bottom: 10px">
+        <el-button type="success" @click="exportData">导出</el-button>
+      </div>
       <el-table stripe :data="data.tableData">
         <el-table-column label="课程编号" prop="cno"></el-table-column>
         <el-table-column label="课程名称" prop="cname"></el-table-column>
@@ -86,4 +89,17 @@ const reset=()=>{
   data.tno='';
   load();
 }
+
+const exportData = () => {
+  // 构建查询字符串
+  const params = new URLSearchParams({
+    cname: data.cname || '',  // 课程名称
+    cno: data.cno || '',      // 课程编号
+    tno: data.tno || ''       // 教师编号
+  });
+
+  // 打开导出链接，传递查询参数
+  window.open(`http://localhost:9090/course/export?${params.toString()}`);
+}
+
 </script>
