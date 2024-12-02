@@ -5,7 +5,7 @@ public class Course {
     private String cno;
     private String tno;
     private String cname;
-    private double ccredit;
+    private String ccredit;
     private String cdescribe;
 
     @Override
@@ -52,11 +52,11 @@ public class Course {
         this.cname = cname;
     }
 
-    public double getCcredit() {
+    public String getCcredit() {
         return ccredit;
     }
 
-    public void setCcredit(float ccredit) {
+    public void setCcredit(String ccredit) {
         this.ccredit = ccredit;
     }
 

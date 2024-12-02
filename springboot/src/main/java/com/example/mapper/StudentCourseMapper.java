@@ -8,7 +8,7 @@ import java.util.List;
 public interface StudentCourseMapper {
     //@Select("select * from student.studentcourse where sno=#{sno} order by scId desc ")
     List<StudentCourse> selectAll(StudentCourse studentCourse);
-    @Insert("insert into student.studentcourse(sno,cno) values (#{sno},#{cno})")
+    @Insert("insert into student.studentcourse(sno,cno,grade) values (#{sno},#{cno},#{grade})")
     void addSC(StudentCourse studentCourse);
     @Select("select *from studentcourse where sno=#{sno} and cno=#{cno}")
     StudentCourse selectBySnoAndCno(StudentCourse studentCourse);

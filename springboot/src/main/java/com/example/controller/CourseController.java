@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
 import cn.hutool.poi.excel.ExcelWriter;
 import com.example.common.Result;
@@ -8,11 +9,13 @@ import com.example.service.CourseService;
 import com.github.pagehelper.PageInfo;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
@@ -66,6 +69,22 @@ public class CourseController {
         ServletOutputStream out = response.getOutputStream();
         writer.flush(out);
         writer.close();
+    }
+
+    @PostMapping("/import")
+    public Result importData(MultipartFile file) throws IOException {
+        InputStream inputStream = file.getInputStream();
+        ExcelReader reader = ExcelUtil.getReader(inputStream);
+        reader.addHeaderAlias("课程编号", "cno");
+        reader.addHeaderAlias("课程名称", "cname");
+        reader.addHeaderAlias("任课教师编号", "tno");
+        reader.addHeaderAlias("课程学分", "ccredit");
+        reader.addHeaderAlias("课程描述", "cdescribe");
+        List<Course> courseList = reader.readAll(Course.class);
+        for (Course course : courseList) {
+            courseService.addCourseInfo(course);
+        }
+        return Result.success();
     }
 }
 
