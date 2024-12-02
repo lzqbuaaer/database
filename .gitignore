@@ -1,3 +1,4 @@
-/.idea/
-/vue/node_modules/
-/springboot/src/main/resources/application.yml
+.idea/
+vue/node_modules/
+springboot/src/main/resources/application.yml
+springboot/target/
