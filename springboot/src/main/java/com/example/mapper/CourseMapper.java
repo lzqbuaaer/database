@@ -17,4 +17,7 @@ public interface CourseMapper {
     void updateByCNO(Course course);
     @Delete("delete from student.tbcourse where cno=#{cno}")
     void deleteByCNO(String cno);
+
+    @Select("select count(*) from student.tbcourse where cno = #{cno}")
+    int existsByCNO(String cno);
 }
