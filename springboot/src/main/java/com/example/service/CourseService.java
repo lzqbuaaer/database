@@ -1,5 +1,6 @@
 package com.example.service;
 
+import com.example.exception.CustomException;
 import com.example.mapper.CourseMapper;
 import com.example.entity.Course;
 import com.github.pagehelper.PageHelper;
@@ -21,7 +22,11 @@ public class CourseService {
         return PageInfo.of(courseList);
     }
     public void addCourseInfo(Course course){
-        courseMapper.insertCourse(course);
+        if (courseMapper.existsByCNO(course.getCno()) > 0) {
+            throw new CustomException("课程编号冲突");
+        } else {
+            courseMapper.insertCourse(course);
+        }
     }
 
     public void updateByCNO(Course course){
