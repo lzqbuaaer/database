@@ -51,4 +51,17 @@ public class StudentService {
     public List<Student> selectAll(Student student){
         return studentMapper.selectAll(student);
     }
+
+    public void register(Account account){
+        Student db_Student= new Student();
+        if(studentMapper.selectByStudent(account.getUsername())!=null){
+            throw new CustomException("用户名已存在!");
+        }
+        db_Student.setUsername(account.getUsername());
+        String MD5Pwd=MD5Utils.getMD5(account.getPassword());
+        db_Student.setPassword(MD5Pwd);
+        db_Student.setName(account.getName());
+        db_Student.setRole("STUDENT");
+        studentMapper.insertStudent(db_Student);
+    }
 }

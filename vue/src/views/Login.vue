@@ -2,7 +2,7 @@
   <div>
     <div class="login-container">
       <div style="width: 550px" class="login-box">
-        <div style="front-weight:bold;front-size:24px; text-align:center; margin-bottom: 30px">登录</div>
+        <div style="front-weight:bold;front-size:24px; text-align:center; margin-bottom: 30px">欢迎您登录</div>
         <el-form ref="formRef" :model="data.form" :rules="rules">
           <el-form-item prop="username">
             <el-input prefix-icon="User" v-model="data.form.username" placeholder="输入管理员账号、学生学号或者教师编号，管理员默认admin" clearable/>
@@ -22,7 +22,7 @@
             <el-button type="info" style="margin-left: 74%; " @click.native="resetForm">重置</el-button>
           </el-form-item>
           <div style="text-align: center; margin-top: 20px">
-            <router-link to="/register">没有管理员账号？点击注册</router-link>
+            <router-link to="/register">没有学生或教师账号？点击注册</router-link>
           </div>
         </el-form>
       </div>

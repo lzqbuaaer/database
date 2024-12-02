@@ -2,20 +2,24 @@
   <div>
     <div class="login-container">
       <div style="width: 400px" class="login-box">
-        <div style="front-weight:bold;front-size:24px; text-align:center; margin-bottom: 30px">注册成为管理员</div>
+        <div style="front-weight:bold;front-size:24px; text-align:center; margin-bottom: 30px">注册成为学生或教师</div>
         <el-form ref="formRef" :model="data.form" :rules="rules">
           <el-form-item prop="username">
-            <el-input prefix-icon="User" v-model="data.form.username" placeholder="输入您想设置的管理员账号"/>
+            <el-input prefix-icon="User" v-model="data.form.username" placeholder="输入学生学号或教师编号" clearable/>
+          </el-form-item>
+          <el-form-item prop="name">
+            <el-input prefix-icon="User" v-model="data.form.name" placeholder="输入姓名" clearable/>
           </el-form-item>
           <el-form-item prop="password">
-            <el-input show-password prefix-icon="Lock" v-model="data.form.password" placeholder="输入密码"/>
+            <el-input show-password prefix-icon="Lock" v-model="data.form.password" placeholder="输入密码" clearable/>
           </el-form-item>
           <el-form-item prop="confirmPassword">
-            <el-input show-password prefix-icon="Lock" v-model="data.form.confirmPassword" placeholder="请确认密码"/>
+            <el-input show-password prefix-icon="Lock" v-model="data.form.confirmPassword" placeholder="请确认密码" clearable/>
           </el-form-item>
           <el-form-item prop="role">
             <el-select style="width: 100%" v-model="data.form.role">
-              <el-option value="ADMIN" label="管理员"></el-option>
+              <el-option value="STUDENT" label="学生"></el-option>
+              <el-option value="TEACHER" label="教师"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item>
@@ -41,7 +45,7 @@ import axios from "axios";
 
 const data = reactive({
   form: {
-    role: 'ADMIN'
+    role: ''
   },
 })
 
@@ -61,6 +65,9 @@ const rules = reactive({
   ],
   password: [
     {required: true, message: '请输入密码', trigger: 'blur'},
+  ],
+  name: [
+    {required: true, message: '请输入姓名'},
   ],
   confirmPassword: [
     {required: true, message: '请再次输入密码', trigger: 'blur'},

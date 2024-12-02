@@ -55,4 +55,17 @@ public class TeacherService {
     public List<Teacher> selectAll(Teacher teacher){
         return teacherMapper.selectAll(teacher);
     }
+
+    public void register(Account account){
+        Teacher db_Teacher= new Teacher();
+        if(teacherMapper.selectByTeacher(account.getUsername())!=null){
+            throw new CustomException("用户名已存在!");
+        }
+        db_Teacher.setUsername(account.getUsername());
+        String MD5Pwd=MD5Utils.getMD5(account.getPassword());
+        db_Teacher.setPassword(MD5Pwd);
+        db_Teacher.setName(account.getName());
+        db_Teacher.setRole("TEACHER");
+        teacherMapper.insertTeacher(db_Teacher);
+    }
 }

@@ -43,8 +43,8 @@
       </el-form>
       <template #footer>
       <span class="dialog-footer">
-        <el-button @click="data.formVisible = false">取 消</el-button>
-        <el-button type="primary" @click="save">保 存</el-button>
+        <el-button @click="data.formVisible = false">取消</el-button>
+        <el-button type="primary" @click="save">保存</el-button>
       </span>
       </template>
     </el-dialog>

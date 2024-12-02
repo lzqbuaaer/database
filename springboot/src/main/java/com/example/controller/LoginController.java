@@ -40,9 +40,13 @@ public class LoginController {
     @PostMapping("/register")
     public Result register(@RequestBody Account account) {
         if (RoleEnum.ADMIN.name().equals(account.getRole())) {
-             adminService.register(account);
+            return Result.error("角色错误！不能注册为管理员");
+        } else if (RoleEnum.STUDENT.name().equals(account.getRole())) {
+            studentService.register(account);
+        } else if (RoleEnum.TEACHER.name().equals(account.getRole())) {
+            teacherService.register(account);
         } else {
-            return Result.error("角色错误！只能注册为管理员");
+            return Result.error("角色错误！");
         }
         return Result.success();
     }
