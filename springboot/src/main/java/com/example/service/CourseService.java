@@ -30,4 +30,8 @@ public class CourseService {
     public void deleteByCNO(String cno){
         courseMapper.deleteByCNO(cno);
     }
+
+    public List<Course> selectAll(Course course) {
+        return courseMapper.selectAll(course);
+    }
 }

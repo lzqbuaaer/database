@@ -12,6 +12,10 @@
     <div class="card" style="margin-bottom: 10px">
       <div style="margin-bottom: 10px">
         <el-button type="primary" @click="handleAdd">新增</el-button>
+        <el-button type="success" @click="exportData">导出</el-button>
+        <el-upload style="display: inline-block; margin-left:10px" action="http://localhost:9090/course/import" :show-file-list="false" :on-success="importSuccess">
+          <el-button type="info">导入</el-button>
+        </el-upload>
       </div>
       <el-table stripe :data="data.tableData">
         <el-table-column label="课程编号" prop="cno"></el-table-column>
@@ -106,6 +110,28 @@ const handleAdd = () => {
   data.form = {}
   data.formVisible = true
 }
+
+const exportData = () => {
+  // 构建查询字符串
+  const params = new URLSearchParams({
+    cname: data.cname || '',  // 课程名称
+    cno: data.cno || '',      // 课程编号
+    tno: data.tno || ''       // 教师编号
+  });
+
+  // 打开导出链接，传递查询参数
+  window.open(`http://localhost:9090/course/export?${params.toString()}`);
+}
+
+const importSuccess = (res) => {
+  if (res.code === '200') {
+    ElMessage.success("导入成功")
+    load()
+  } else {
+    ElMessage.error(res.msg)
+  }
+}
+
 const handleEdit = (row) => {
    data.form = JSON.parse(JSON.stringify(row))
   data.formVisible = true

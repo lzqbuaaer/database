@@ -9,6 +9,15 @@
     </div>
 
     <div class="card" style="margin-bottom: 10px">
+      <div style="margin-bottom: 10px">
+        <el-button type="success" @click="exportData">导出</el-button>
+        <el-upload v-if="data.user.role!=='STUDENT'"
+                   style="display: inline-block; margin-left:10px"
+                   action="http://localhost:9090/studentCourse/import"
+                   :show-file-list="false" :on-success="importSuccess">
+          <el-button type="info">导入</el-button>
+        </el-upload>
+      </div>
       <el-table stripe :data="data.tableData">
         <el-table-column label="选课编号" prop="scId"></el-table-column>
         <el-table-column label="课程编号" prop="cno"></el-table-column>
@@ -138,4 +147,42 @@ const reset=()=>{
   data.cno='';
   load();
 }
+
+const exportData = () => {
+  if (data.user.role==='TEACHER') {
+    const params = new URLSearchParams({
+      cname: data.cname || '',  // 课程名称
+      cno: data.cno || '',      // 课程编号
+      tno: data.user.username || '',
+    });
+
+    window.open(`http://localhost:9090/studentCourse/export?${params.toString()}`);
+  } else if (data.user.role==='STUDENT') {
+    const params = new URLSearchParams({
+      cname: data.cname || '',  // 课程名称
+      cno: data.cno || '',      // 课程编号
+      sno: data.user.username || '',
+    });
+
+    window.open(`http://localhost:9090/studentCourse/export?${params.toString()}`);
+  } else {
+    const params = new URLSearchParams({
+      cname: data.cname || '',  // 课程名称
+      cno: data.cno || '',      // 课程编号
+    });
+
+    // 打开导出链接，传递查询参数
+    window.open(`http://localhost:9090/studentCourse/export?${params.toString()}`);
+  }
+}
+
+const importSuccess = (res) => {
+  if (res.code === '200') {
+    ElMessage.success("导入成功")
+    load()
+  } else {
+    ElMessage.error(res.msg)
+  }
+}
+
 </script>

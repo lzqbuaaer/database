@@ -47,4 +47,8 @@ public class StudentService {
         if(!MD5Utils.getMD5(account.getPassword()).equals(check.getPassword())) return 0;
         return 1;
     }
+
+    public List<Student> selectAll(Student student){
+        return studentMapper.selectAll(student);
+    }
 }
