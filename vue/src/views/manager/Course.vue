@@ -23,6 +23,11 @@
         <el-table-column label="任课教师编号" prop="tno"></el-table-column>
         <el-table-column label="课程学分" prop="ccredit"></el-table-column>
         <el-table-column label="课程描述" prop="cdescribe"></el-table-column>
+        <el-table-column label="时间" align="center">
+          <template #default="scope">
+            星期{{ scope.row.cday }}-第{{ scope.row.ctime }}节
+          </template>
+        </el-table-column>
         <el-table-column label="操作" align="center" width="160">
           <template v-slot="scope">
             <el-button type="primary" @click="handleEdit(scope.row)">编辑</el-button>
@@ -54,6 +59,12 @@
         </el-form-item>
         <el-form-item label="课程描述" prop="cdescribe">
           <el-input v-model="data.form.cdescribe" autocomplete="off" />
+        </el-form-item>
+        <el-form-item label="星期：" prop="cday">
+          <el-input v-model="data.form.cday" autocomplete="off" />
+        </el-form-item>
+        <el-form-item label="课程节号：" prop="ctime">
+          <el-input v-model="data.form.ctime" autocomplete="off" />
         </el-form-item>
       </el-form>
       <template #footer>

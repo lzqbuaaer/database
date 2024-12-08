@@ -54,10 +54,10 @@
               <span>选课记录</span>
             </el-menu-item>
           </el-sub-menu>
-          <el-sub-menu index="3" v-if="user.role==='ADMIN'">
+          <el-sub-menu index="4" v-if="user.role==='ADMIN'">
             <template #title>
-              <el-icon><User /></el-icon>
-              <span>用户管理</span>
+              <el-icon><Promotion /></el-icon>
+              <span>信息管理</span>
             </template>
             <el-menu-item index="/student">
               <el-icon><UserFilled /></el-icon>
@@ -66,6 +66,10 @@
             <el-menu-item index="/teacher">
               <el-icon><UserFilled /></el-icon>
               <span>教师信息</span>
+            </el-menu-item>
+            <el-menu-item index="/notice">
+              <el-icon><Bell /></el-icon>
+              <span>公告信息</span>
             </el-menu-item>
           </el-sub-menu>
           <el-menu-item index="/person">

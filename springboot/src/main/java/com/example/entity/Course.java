@@ -7,6 +7,8 @@ public class Course {
     private String cname;
     private String ccredit;
     private String cdescribe;
+    private Integer cday;
+    private Integer ctime;
 
     @Override
     public String toString() {
@@ -17,6 +19,8 @@ public class Course {
                 ", cname='" + cname + '\'' +
                 ", ccredit=" + ccredit +
                 ", cdescribe='" + cdescribe + '\'' +
+                ", cday='" + cday + '\'' +
+                ", ctime='" + ctime + '\'' +
                 '}';
     }
 
@@ -66,5 +70,18 @@ public class Course {
 
     public void setCdescribe(String cdescribe) {
         this.cdescribe = cdescribe;
+    }
+
+    public Integer getCday() {
+        return cday;
+    }
+    public void setCday(Integer cday) {
+        this.cday = cday;
+    }
+    public Integer getCtime() {
+        return ctime;
+    }
+    public void setCtime(Integer ctime) {
+        this.ctime = ctime;
     }
 }
