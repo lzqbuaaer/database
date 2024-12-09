@@ -65,10 +65,23 @@
           <el-input v-model="data.form.cdescribe" autocomplete="off"/>
         </el-form-item>
         <el-form-item label="星期：" prop="cday">
-          <el-input v-model="data.form.cday" autocomplete="off"/>
+          <el-select v-model="data.form.cday">
+            <el-option
+                v-for="(day, index) in data.weekDays"
+                :key="index"
+                :label="day"
+                :value="index + 1"
+            />
+          </el-select>
         </el-form-item>
         <el-form-item label="课程节号：" prop="ctime">
-          <el-input v-model="data.form.ctime" autocomplete="off"/>
+          <el-select v-model="data.form.ctime" >
+            <el-option label="1" value="1"/>
+            <el-option label="2" value="2"/>
+            <el-option label="3" value="3"/>
+            <el-option label="4" value="4"/>
+            <el-option label="5" value="5"/>
+          </el-select>
         </el-form-item>
       </el-form>
       <template #footer>
@@ -102,7 +115,8 @@ const data = reactive({
   formVisible: false,
   form: {},
   tableData: [],
-  total: 0
+  total: 0,
+  weekDays: ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日']
 })
 const load = () => {
   axios.get('http://localhost:9090/course/selectPage', {

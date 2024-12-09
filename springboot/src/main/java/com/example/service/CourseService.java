@@ -40,4 +40,8 @@ public class CourseService {
     public List<Course> selectAll(Course course) {
         return courseMapper.selectAll(course);
     }
+
+    public Course selectByCNO(String cno) {
+        return courseMapper.selectByCNO(cno).get(0);
+    }
 }
