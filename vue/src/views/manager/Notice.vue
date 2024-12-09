@@ -78,6 +78,7 @@ const load=()=>{
     }
   }).then( res=>{
     console.log(res.data.data);
+    ElMessage.success('查询完成！');
     data.tableData=res.data.data?.list||[]
     data.total=res.data.data?.total||0
   })

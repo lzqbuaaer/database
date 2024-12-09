@@ -4,7 +4,9 @@ import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
 import cn.hutool.poi.excel.ExcelWriter;
 import com.example.common.Result;
+import com.example.entity.Log;
 import com.example.entity.StudentCourse;
+import com.example.service.LogService;
 import com.example.service.StudentCourseService;
 import com.github.pagehelper.PageInfo;
 import org.springframework.web.bind.annotation.*;
@@ -23,26 +25,54 @@ import java.util.List;
 public class StudentCourseController {
     @Resource
     private StudentCourseService studentCourseService;
+    @Resource
+    private LogService logService;
+
     @PostMapping("addSC")
-    Result addSC(@RequestBody StudentCourse studentCourse){
+    Result addSC(@RequestBody StudentCourse studentCourse,
+                 @RequestParam(defaultValue = "") String username,
+                 @RequestParam(defaultValue = "") String userRole) {
         studentCourseService.addSC(studentCourse);
+        // 添加日志
+        Log log1 = new Log(username, userRole, "select * from student.studentcourse where sno=" + studentCourse.getSno() + " and cno=" + studentCourse.getCno());
+        Log log2 = new Log(username, userRole, "insert into student.studentcourse(sno,cno,grade) values(" + studentCourse.getSno() + "," + studentCourse.getCno() + "," + studentCourse.getGrade() + ")");
+        logService.add(log1);
+        logService.add(log2);
         return Result.success();
     }
+
     @GetMapping("/selectPage")
     public Result selectPage(@RequestParam(defaultValue = "1") Integer pageNum,
                              @RequestParam(defaultValue = "5") Integer pageSize,
-                             StudentCourse studentCourse){
-        PageInfo<StudentCourse> pageInfo=studentCourseService.selectPage(pageNum,pageSize,studentCourse);
+                             @RequestParam(defaultValue = "") String username,
+                             @RequestParam(defaultValue = "") String userRole,
+                             StudentCourse studentCourse) {
+        PageInfo<StudentCourse> pageInfo = studentCourseService.selectPage(pageNum, pageSize, studentCourse);
+        // 添加日志
+        Log log = new Log(username, userRole, "select * from student.studentcourse where sno=" + studentCourse.getSno()+" order by scId desc");
+        logService.add(log);
         return Result.success(pageInfo);
     }
+
     @DeleteMapping("/deleteByScId/{scId}")
-    public Result deleteByScId(@PathVariable Integer scId){
+    public Result deleteByScId(@PathVariable Integer scId,
+                               @RequestParam(defaultValue = "") String username,
+                               @RequestParam(defaultValue = "") String userRole) {
         studentCourseService.deleteByScId(scId);
+        // 添加日志
+        Log log = new Log(username, userRole, "delete from student.studentcourse where scId=" + scId);
+        logService.add(log);
         return Result.success();
     }
+
     @PutMapping("/addGrade")
-    public Result addGrade(@RequestBody StudentCourse studentCourse){
+    public Result addGrade(@RequestBody StudentCourse studentCourse,
+                           @RequestParam(defaultValue = "") String username,
+                           @RequestParam(defaultValue = "") String userRole) {
         studentCourseService.addGrade(studentCourse);
+        // 添加日志
+        Log log = new Log(username, userRole, "update student.studentcourse set grade=" + studentCourse.getGrade() + " where scId=" + studentCourse.getScId());
+        logService.add(log);
         return Result.success();
     }
 

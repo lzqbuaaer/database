@@ -15,6 +15,7 @@ const router = createRouter({
                 {path: 'teacher', name: 'Teacher', component: () => import('@/views/manager/Teacher.vue')},
                 {path: 'person', name: 'Person', component: () => import('@/views/manager/Person.vue')},
                 {path: 'notice', name: 'Notice', component: () => import('@/views/manager/Notice.vue')},
+                {path: 'log', name: 'Log', component: () => import('@/views/manager/Log.vue')},
                 {path: 'courselist', name: 'CourseList', component: () => import('@/views/manager/CourseList.vue')},
                 {
                     path: 'studentcourseinfo',

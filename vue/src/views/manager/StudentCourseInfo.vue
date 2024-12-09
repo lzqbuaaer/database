@@ -92,6 +92,8 @@ const load=()=>{
   let params={
     pageNum:data.pageNum,
     pageSize:data.pageSize,
+    username:data.user.name,
+    userRole:data.user.role,
     cname:data.cname,
     cno:data.cno,
   }
@@ -104,6 +106,7 @@ const load=()=>{
     params:params
   }).then( res=>{
     console.log(res.data.data);
+    ElMessage.success('查询完成！');
     data.tableData=res.data.data?.list||[]
     data.total=res.data.data?.total||0
   })
@@ -114,7 +117,13 @@ const handleCurrentChange=(pageNum)=>{
 }
 const del = (row) => {
   ElMessageBox.confirm('您确定退选该课程吗?', '确认', { type: 'warning' }).then(res => {
-    axios.delete('http://localhost:9090/studentCourse/deleteByScId/'+row.scId).then(res=>{
+    axios.delete('http://localhost:9090/studentCourse/deleteByScId/'+row.scId,
+        {
+          params:{
+            username:data.user.name,
+            userRole:data.user.role
+          }
+        }).then(res=>{
       if(res.data.code=== '200'){
         load();
         ElMessage.success('操作成功!');
@@ -132,6 +141,11 @@ const save=()=>{
   axios.put('http://localhost:9090/studentCourse/addGrade',{
     scId: data.form.scId,
     grade: data.form.grade,
+  },{
+    params:{
+      username:data.user.name,
+      userRole:data.user.role
+    }
   }).then(res=>{
     if(res.data.code=== '200'){
       load();

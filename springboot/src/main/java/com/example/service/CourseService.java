@@ -1,5 +1,6 @@
 package com.example.service;
 
+import com.example.entity.Log;
 import com.example.exception.CustomException;
 import com.example.mapper.CourseMapper;
 import com.example.entity.Course;

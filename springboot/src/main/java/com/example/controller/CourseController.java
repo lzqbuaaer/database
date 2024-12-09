@@ -5,7 +5,9 @@ import cn.hutool.poi.excel.ExcelUtil;
 import cn.hutool.poi.excel.ExcelWriter;
 import com.example.common.Result;
 import com.example.entity.Course;
+import com.example.entity.Log;
 import com.example.service.CourseService;
+import com.example.service.LogService;
 import com.github.pagehelper.PageInfo;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -25,26 +27,52 @@ import java.util.List;
 public class CourseController {
     @Resource
     private CourseService courseService;
+    @Resource
+    private LogService logService;
+
     @GetMapping("/selectPage")
     public Result selectPage(@RequestParam(defaultValue = "1") Integer pageNum,
                              @RequestParam(defaultValue = "5") Integer pageSize,
-                             Course course){
-        PageInfo<Course> pageInfo=courseService.selectPage(pageNum,pageSize,course);
+                             @RequestParam(defaultValue = "") String username,
+                             @RequestParam(defaultValue = "") String userRole,
+                             Course course) {
+        PageInfo<Course> pageInfo = courseService.selectPage(pageNum, pageSize, course);
+        //添加日志
+        Log log = new Log(username, userRole, "select * from student.tbcourse where cname like concat('%'," + course.getCname() + ",'%') and cno like concat('%'," + course.getCno() + ",'%') and tno like concat('%'," + course.getTno() + ",'%') order by id desc");
+        logService.add(log);
         return Result.success(pageInfo);
     }
+
     @PostMapping("/addCourseInfo")
-    public Result addCourseInfo(@RequestBody Course course){
+    public Result addCourseInfo(@RequestBody Course course,
+                                @RequestParam(defaultValue = "") String username,
+                                @RequestParam(defaultValue = "") String userRole) {
         courseService.addCourseInfo(course);
+        //添加日志
+        Log log = new Log(username, userRole, "insert into student.tbcourse(cno, tno, cname, ccredit, cdescribe, cday, ctime) values(" + course.getCno() + "," + course.getTno() + "," + course.getCname() + "," + course.getCcredit() + "," + course.getCdescribe() + "," + course.getCday() + "," + course.getCtime() + ")");
+        logService.add(log);
         return Result.success();
     }
+
     @PutMapping("/updateByCNO")
-    public Result updateByCNO(@RequestBody Course course){
+    public Result updateByCNO(@RequestBody Course course
+            , @RequestParam(defaultValue = "") String username
+            , @RequestParam(defaultValue = "") String userRole) {
         courseService.updateByCNO(course);
+        //添加日志
+        Log log = new Log(username, userRole, "update student.tbcourse set cno=" + course.getCno() + " ,tno=" + course.getTno() + " ,cname=" + course.getCname() + ",ccredit=" + course.getCcredit() + ",cdescribe=" + course.getCdescribe() + ",cday=" + course.getCday() + ",ctime=" + course.getCtime() + " where cno=" + course.getCno());
+        logService.add(log);
         return Result.success();
     }
+
     @DeleteMapping("/deleteByCNO/{cno}")
-    public Result deleteByCNO(@PathVariable String cno){
+    public Result deleteByCNO(@PathVariable String cno,
+                              @RequestParam(defaultValue = "") String username,
+                              @RequestParam(defaultValue = "") String userRole) {
         courseService.deleteByCNO(cno);
+        //添加日志
+        Log log = new Log(username, userRole, "delete from student.tbcourse where cno=" + cno);
+        logService.add(log);
         return Result.success();
     }
 

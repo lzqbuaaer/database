@@ -71,6 +71,10 @@
               <el-icon><Bell /></el-icon>
               <span>公告信息</span>
             </el-menu-item>
+            <el-menu-item v-if="user.role==='ADMIN'" index="/log">
+              <el-icon><Bell /></el-icon>
+              <span>操作日志信息</span>
+            </el-menu-item>
           </el-sub-menu>
           <el-menu-item index="/person">
             <el-icon><User /></el-icon>
