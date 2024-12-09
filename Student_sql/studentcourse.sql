@@ -11,7 +11,7 @@
  Target Server Version : 80039 (8.0.39)
  File Encoding         : 65001
 
- Date: 09/12/2024 10:17:33
+ Date: 09/12/2024 10:44:01
 */
 
 SET NAMES utf8mb4;
@@ -40,27 +40,20 @@ INSERT INTO `studentcourse` VALUES (8, 'S01', 'C03', 98.0);
 INSERT INTO `studentcourse` VALUES (14, 'S01', 'C05', 93.0);
 INSERT INTO `studentcourse` VALUES (16, 'S02', 'C05', 95.0);
 INSERT INTO `studentcourse` VALUES (17, 'S02', 'C03', 96.0);
-INSERT INTO `studentcourse` VALUES (18, 'S03', 'C06', NULL);
 INSERT INTO `studentcourse` VALUES (19, 'S03', 'C04', 93.0);
 INSERT INTO `studentcourse` VALUES (20, 'S03', 'C02', NULL);
-INSERT INTO `studentcourse` VALUES (22, 'S04', 'C06', NULL);
 INSERT INTO `studentcourse` VALUES (23, 'S04', 'C04', 94.0);
 INSERT INTO `studentcourse` VALUES (24, 'S04', 'C02', NULL);
-INSERT INTO `studentcourse` VALUES (25, 'S05', 'C06', NULL);
 INSERT INTO `studentcourse` VALUES (26, 'S05', 'C04', 94.5);
 INSERT INTO `studentcourse` VALUES (27, 'S05', 'C02', NULL);
-INSERT INTO `studentcourse` VALUES (28, 'S06', 'C06', NULL);
 INSERT INTO `studentcourse` VALUES (29, 'S06', 'C04', 96.5);
 INSERT INTO `studentcourse` VALUES (30, 'S06', 'C02', NULL);
-INSERT INTO `studentcourse` VALUES (31, 'S07', 'C06', NULL);
 INSERT INTO `studentcourse` VALUES (32, 'S07', 'C04', 97.5);
 INSERT INTO `studentcourse` VALUES (33, 'S07', 'C01', 97.0);
-INSERT INTO `studentcourse` VALUES (34, 'S08', 'C06', NULL);
 INSERT INTO `studentcourse` VALUES (35, 'S08', 'C04', 98.5);
 INSERT INTO `studentcourse` VALUES (36, 'S08', 'C01', 98.0);
 INSERT INTO `studentcourse` VALUES (37, 'S01', 'C04', NULL);
 INSERT INTO `studentcourse` VALUES (38, 'S01', 'C01', 88.0);
-INSERT INTO `studentcourse` VALUES (39, 'S01', 'C06', NULL);
 INSERT INTO `studentcourse` VALUES (44, 'S03', 'C01', 96.5);
 INSERT INTO `studentcourse` VALUES (45, 'S01', 'C02', 0.0);
 

@@ -11,7 +11,7 @@
  Target Server Version : 80039 (8.0.39)
  File Encoding         : 65001
 
- Date: 09/12/2024 10:17:52
+ Date: 09/12/2024 10:43:51
 */
 
 SET NAMES utf8mb4;
@@ -44,9 +44,16 @@ INSERT INTO `tbcourse` VALUES (2, 'C02', 'T02', 'C语言程序设计', 3.0, 'c�
 INSERT INTO `tbcourse` VALUES (4, 'C03', 'T02', '计算机网络', 3.0, '计网12345', 3, 1);
 INSERT INTO `tbcourse` VALUES (5, 'C04', 'T01', '数据结构', 5.0, '数据结构与算法C++', 4, 2);
 INSERT INTO `tbcourse` VALUES (7, 'C05', 'T01', '计算机操作系统', 4.0, '123456', 5, 3);
-INSERT INTO `tbcourse` VALUES (11, 'C06', 'T02', '概率论', 3.0, '123', 3, 2);
 INSERT INTO `tbcourse` VALUES (26, 'C07', 'T02', '数据库', 4.0, '123', 4, 4);
 INSERT INTO `tbcourse` VALUES (27, 'C08', 'T01', '数据库', 4.0, '1234', 4, 4);
-INSERT INTO `tbcourse` VALUES (28, 'C09', 'T01', '编译技术', 4.5, '编译', 3, 5);
+
+-- ----------------------------
+-- Triggers structure for table tbcourse
+-- ----------------------------
+DROP TRIGGER IF EXISTS `delete`;
+delimiter ;;
+CREATE TRIGGER `delete` BEFORE DELETE ON `tbcourse` FOR EACH ROW DELETE FROM studentcourse WHERE cno = OLD.cno
+;;
+delimiter ;
 
 SET FOREIGN_KEY_CHECKS = 1;
