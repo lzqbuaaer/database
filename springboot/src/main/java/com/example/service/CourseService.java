@@ -1,5 +1,6 @@
 package com.example.service;
 
+import com.example.entity.Teacher;
 import com.example.exception.CustomException;
 import com.example.mapper.CourseMapper;
 import com.example.entity.Course;
@@ -38,5 +39,9 @@ public class CourseService {
 
     public List<Course> selectAll(Course course) {
         return courseMapper.selectAll(course);
+    }
+
+    public Course selectByCNO(String cno) {
+        return courseMapper.selectByCNO(cno).get(0);
     }
 }

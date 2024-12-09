@@ -46,7 +46,10 @@
           <el-input v-model="data.form.name" autocomplete="off" />
         </el-form-item>
         <el-form-item label="性别" prop="ssex">
-          <el-input v-model="data.form.ssex" autocomplete="off" />
+          <el-select v-model="data.form.ssex" >
+            <el-option label="男" value="男"/>
+            <el-option label="女" value="女"/>
+          </el-select>
         </el-form-item>
         <el-form-item label="班级" prop="sclass">
           <el-input v-model="data.form.sclass" autocomplete="off" />

@@ -41,6 +41,11 @@ public class StudentService {
         student.setPassword(MD5Pwd);
         studentMapper.updateBySNO(student);
     }
+
+    public void updateStudent(Student student){
+        studentMapper.updateStudent(student);
+    }
+
     public void deleteBySNO(String username){studentMapper.deleteBySNO(username);}
     public int checkPwd(Account account){
         Account check= studentMapper.checkPwd(account.getUsername());
