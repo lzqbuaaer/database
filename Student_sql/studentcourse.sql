@@ -11,7 +11,7 @@
  Target Server Version : 80039 (8.0.39)
  File Encoding         : 65001
 
- Date: 09/12/2024 10:44:01
+ Date: 09/12/2024 23:15:29
 */
 
 SET NAMES utf8mb4;
@@ -31,7 +31,7 @@ CREATE TABLE `studentcourse`  (
   INDEX `sno`(`sno` ASC) USING BTREE,
   CONSTRAINT `cno` FOREIGN KEY (`cno`) REFERENCES `tbcourse` (`cno`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `sno` FOREIGN KEY (`sno`) REFERENCES `tbstudent` (`sno`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 46 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 48 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of studentcourse
@@ -56,5 +56,55 @@ INSERT INTO `studentcourse` VALUES (37, 'S01', 'C04', NULL);
 INSERT INTO `studentcourse` VALUES (38, 'S01', 'C01', 88.0);
 INSERT INTO `studentcourse` VALUES (44, 'S03', 'C01', 96.5);
 INSERT INTO `studentcourse` VALUES (45, 'S01', 'C02', 0.0);
+INSERT INTO `studentcourse` VALUES (47, 'S01', 'C07', 0.0);
+
+-- ----------------------------
+-- Triggers structure for table studentcourse
+-- ----------------------------
+DROP TRIGGER IF EXISTS `t1`;
+delimiter ;;
+CREATE TRIGGER `t1` BEFORE INSERT ON `studentcourse` FOR EACH ROW BEGIN
+  DECLARE conflict INT;
+
+  -- 检查学生是否已经在同一时间选修了其他课程
+  SELECT COUNT(*) INTO conflict
+  FROM studentcourse sc
+  JOIN tbcourse c ON sc.cno = c.cno
+  WHERE sc.sno = NEW.sno
+    AND c.cday = (SELECT cday FROM tbcourse WHERE cno = NEW.cno)
+    AND c.ctime = (SELECT ctime FROM tbcourse WHERE cno = NEW.cno);
+
+  -- 如果找到冲突，抛出错误
+  IF conflict > 0 THEN
+    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = '学生在同一时间已经选修了其他课程';
+  END IF;
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Triggers structure for table studentcourse
+-- ----------------------------
+DROP TRIGGER IF EXISTS `t2`;
+delimiter ;;
+CREATE TRIGGER `t2` BEFORE UPDATE ON `studentcourse` FOR EACH ROW BEGIN
+  DECLARE conflict INT;
+
+  -- 检查学生是否已经在同一时间选修了其他课程
+  SELECT COUNT(*) INTO conflict
+  FROM studentcourse sc
+  JOIN tbcourse c ON sc.cno = c.cno
+  WHERE sc.sno = NEW.sno
+    AND c.cday = (SELECT cday FROM tbcourse WHERE cno = NEW.cno)
+    AND c.ctime = (SELECT ctime FROM tbcourse WHERE cno = NEW.cno)
+    AND sc.scId != OLD.scId;  -- 排除正在更新的记录
+
+  -- 如果找到冲突，抛出错误
+  IF conflict > 0 THEN
+    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = '学生在同一时间已经选修了其他课程';
+  END IF;
+END
+;;
+delimiter ;
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -11,7 +11,7 @@
  Target Server Version : 80039 (8.0.39)
  File Encoding         : 65001
 
- Date: 09/12/2024 10:43:51
+ Date: 09/12/2024 23:15:44
 */
 
 SET NAMES utf8mb4;
@@ -45,7 +45,54 @@ INSERT INTO `tbcourse` VALUES (4, 'C03', 'T02', '计算机网络', 3.0, '计网1
 INSERT INTO `tbcourse` VALUES (5, 'C04', 'T01', '数据结构', 5.0, '数据结构与算法C++', 4, 2);
 INSERT INTO `tbcourse` VALUES (7, 'C05', 'T01', '计算机操作系统', 4.0, '123456', 5, 3);
 INSERT INTO `tbcourse` VALUES (26, 'C07', 'T02', '数据库', 4.0, '123', 4, 4);
-INSERT INTO `tbcourse` VALUES (27, 'C08', 'T01', '数据库', 4.0, '1234', 4, 4);
+INSERT INTO `tbcourse` VALUES (27, 'C08', 'T01', '数据库', 4.0, '1234', 4, 3);
+
+-- ----------------------------
+-- Triggers structure for table tbcourse
+-- ----------------------------
+DROP TRIGGER IF EXISTS `course-t1`;
+delimiter ;;
+CREATE TRIGGER `course-t1` BEFORE INSERT ON `tbcourse` FOR EACH ROW BEGIN
+  DECLARE conflict INT;
+
+  -- 检查是否同一老师在同一天同一时间已经安排了课程
+  SELECT COUNT(*) INTO conflict
+  FROM tbcourse c
+  WHERE c.tno = NEW.tno  -- 判断同一个老师
+    AND c.cday = NEW.cday -- 判断是否在同一天
+    AND c.ctime = NEW.ctime; -- 判断是否在同一时间
+
+  -- 如果发现冲突，抛出错误，阻止插入
+  IF conflict > 0 THEN
+    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = '该老师在同一时间已经安排了课程';
+  END IF;
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Triggers structure for table tbcourse
+-- ----------------------------
+DROP TRIGGER IF EXISTS `course-t2`;
+delimiter ;;
+CREATE TRIGGER `course-t2` BEFORE UPDATE ON `tbcourse` FOR EACH ROW BEGIN
+  DECLARE conflict INT;
+
+  -- 检查是否同一老师在同一天同一时间已经安排了课程
+  SELECT COUNT(*) INTO conflict
+  FROM tbcourse c
+  WHERE c.tno = NEW.tno  -- 判断同一个老师
+    AND c.cday = NEW.cday -- 判断是否在同一天
+    AND c.ctime = NEW.ctime
+    AND c.id != OLD.id; -- 排除正在更新的记录
+
+  -- 如果发现冲突，抛出错误，阻止更新
+  IF conflict > 0 THEN
+    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = '该老师在同一时间已经安排了课程';
+  END IF;
+END
+;;
+delimiter ;
 
 -- ----------------------------
 -- Triggers structure for table tbcourse
