@@ -205,6 +205,7 @@ const saveStudent = () => {
     if (res.data.code === '200') {
       data.formVisibleStudent = false;
       Object.assign(data.user, data.form);
+      localStorage.setItem('student-user', JSON.stringify(data.user));
       ElMessage.success('操作成功!');
     } else {
       ElMessage.error("操作失败!");
@@ -221,6 +222,7 @@ const saveTeacher = () => {
     if (res.data.code === '200') {
       data.formVisibleTeacher = false;
       Object.assign(data.user, data.form);
+      localStorage.setItem('student-user', JSON.stringify(data.user));
       ElMessage.success('操作成功!');
     } else {
       ElMessage.error("操作失败!");
