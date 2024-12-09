@@ -29,7 +29,7 @@
         <el-table-column label="课程描述" prop="cdescribe"></el-table-column>
         <el-table-column label="时间" align="center">
           <template #default="scope">
-            星期{{ scope.row.cday }}-第{{ scope.row.ctime }}节
+            {{ data.weekDays[scope.row.cday - 1] }}-第{{ scope.row.ctime }}大节
           </template>
         </el-table-column>
         <el-table-column label="操作" align="center" width="160">
