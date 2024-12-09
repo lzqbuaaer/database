@@ -5,10 +5,10 @@
         <div style="front-weight:bold;front-size:24px; text-align:center; margin-bottom: 30px">欢迎您登录</div>
         <el-form ref="formRef" :model="data.form" :rules="rules">
           <el-form-item prop="username">
-            <el-input prefix-icon="User" v-model="data.form.username" placeholder="输入管理员账号、学生学号或者教师编号，管理员默认admin" clearable/>
+            <el-input prefix-icon="User" v-model="data.form.username" placeholder="输入管理员账号、学生学号或者教师编号" clearable/>
           </el-form-item>
           <el-form-item prop="password">
-            <el-input show-password prefix-icon="Lock" v-model="data.form.password" placeholder="输入密码，管理员默认admin，其余默认123" clearable/>
+            <el-input show-password prefix-icon="Lock" v-model="data.form.password" placeholder="输入密码" clearable/>
           </el-form-item>
           <el-form-item prop="role" >
             <el-select style="width: 100%" v-model="data.form.role">

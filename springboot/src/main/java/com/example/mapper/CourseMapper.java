@@ -20,4 +20,7 @@ public interface CourseMapper {
 
     @Select("select count(*) from student.tbcourse where cno = #{cno}")
     int existsByCNO(String cno);
+
+    @Select("select * from student.tbcourse where cno = #{cno}")
+    public List<Course> selectByCNO(String cno);
 }

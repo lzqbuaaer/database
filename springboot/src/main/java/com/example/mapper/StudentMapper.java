@@ -1,5 +1,4 @@
 package com.example.mapper;
-import com.example.entity.Account;
 import com.example.entity.Student;
 import org.apache.ibatis.annotations.*;
 
@@ -34,6 +33,10 @@ public interface StudentMapper {
     })
     @Update("update student.tbstudent set sno=#{username} ,sname=#{name} ,ssex=#{ssex},sclass=#{sclass},sdept=#{sdept},spwd=#{password} where sno=#{username}")
     void updateBySNO(Student student);
+
+    @Update("update student.tbstudent set sno=#{username} ,sname=#{name} ,ssex=#{ssex},sclass=#{sclass},sdept=#{sdept} where sno=#{username}")
+    void updateStudent(Student student);
+
     @Results({
             @Result(column = "sno",property = "username"),
             @Result(column = "spwd",property = "password"),

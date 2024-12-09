@@ -30,29 +30,39 @@ public class TeacherController {
     @GetMapping("/selectPage")
     public Result selectPage(@RequestParam(defaultValue = "1") Integer pageNum,
                              @RequestParam(defaultValue = "5") Integer pageSize,
-                             Teacher teacher){
-        PageInfo<Teacher> pageInfo=teacherService.selectPage(pageNum,pageSize,teacher);
+                             Teacher teacher) {
+        PageInfo<Teacher> pageInfo = teacherService.selectPage(pageNum, pageSize, teacher);
         return Result.success(pageInfo);
     }
+
     @PostMapping("/addTeacherInfo")
-    public Result addTeacherInfo(@RequestBody Teacher teacher){
+    public Result addTeacherInfo(@RequestBody Teacher teacher) {
         teacher.setPassword("62bff9c5b8f865bdd70c588ce84158e0");
         teacher.setRole("TEACHER");
         teacherService.addTeacherInfo(teacher);
         return Result.success();
     }
+
     @PutMapping("/updateByTNO")
-    public Result updateBySNO(@RequestBody Teacher teacher){
+    public Result updateBySNO(@RequestBody Teacher teacher) {
         teacherService.updateByTNO(teacher);
         return Result.success();
     }
-    @DeleteMapping("deleteByTNO/{username}")
-    public Result deleteByTNO(@PathVariable String username){
-       teacherService.deleteByTNO(username);
+
+    @PutMapping("/updateTeacher")
+    public Result updateTeacher(@RequestBody Teacher teacher) {
+        teacherService.updateTeacher(teacher);
         return Result.success();
     }
+
+    @DeleteMapping("deleteByTNO/{username}")
+    public Result deleteByTNO(@PathVariable String username) {
+        teacherService.deleteByTNO(username);
+        return Result.success();
+    }
+
     @GetMapping("/checkPwd")
-    public  int checkPwd(@RequestBody Account account){
+    public int checkPwd(@RequestBody Account account) {
         return teacherService.checkPwd(account);
     }
 
