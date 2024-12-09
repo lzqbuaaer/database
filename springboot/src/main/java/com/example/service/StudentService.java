@@ -63,6 +63,14 @@ public class StudentService {
         logService.add(log);
     }
 
+    public void updateStudent(Student student){
+        studentMapper.updateStudent(student);
+        //添加日志
+        Log log = new Log("管理员", "ADMIN", "update student.tbstudent set sno=" + student.getUsername() + " ,sname=" + student.getName() + " ,ssex=" + student
+                .getSsex() + ",sclass=" + student.getSclass() + ",sdept =" + student.getSdept() + " where sno=" + student.getUsername());
+        logService.add(log);
+    }
+
     public void deleteBySNO(String username) {
         studentMapper.deleteBySNO(username);
         //添加日志

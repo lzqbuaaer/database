@@ -69,6 +69,14 @@ public class TeacherService {
         logService.add(log);
     }
 
+    public void updateTeacher(Teacher teacher) {
+        teacherMapper.updateTeacher(teacher);
+        //添加日志
+        Log log = new Log(teacher.getName(), "TEACHER", "update student.tbteacher set tno=" + teacher.getUsername() + " ,tname=" + teacher.getName() + " ,tsex=" + teacher
+                .getTsex() + ",tdept =" + teacher.getTdept() + ",temail=" + teacher.getTemail() + " where tno=" + teacher.getUsername());
+        logService.add(log);
+    }
+
     public void deleteByTNO(String username) {
         teacherMapper.deleteByTNO(username);
         //添加日志
@@ -103,5 +111,9 @@ public class TeacherService {
         //添加日志
         Log log = new Log(db_Teacher.getName(), "TEACHER", "insert into student.tbteacher(tno,tname,tsex,tdept,temail,tpwd,role) values(" + db_Teacher.getUsername() + "," + db_Teacher.getName() + "," + db_Teacher.getTsex() + "," + db_Teacher.getTdept() + "," + db_Teacher.getTemail() + "," + db_Teacher.getPassword() + "," + db_Teacher.getRole() + ")");
         logService.add(log);
+    }
+
+    public Teacher selectByTNO(String username) {
+        return teacherMapper.selectByTNO(username).get(0);
     }
 }
