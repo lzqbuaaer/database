@@ -4,8 +4,10 @@ import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
 import cn.hutool.poi.excel.ExcelWriter;
 import com.example.common.Result;
+import com.example.entity.Comment;
 import com.example.entity.Course;
 import com.example.entity.Log;
+import com.example.service.CommentService;
 import com.example.service.CourseService;
 import com.example.service.LogService;
 import com.github.pagehelper.PageInfo;
@@ -29,6 +31,8 @@ public class CourseController {
     private CourseService courseService;
     @Resource
     private LogService logService;
+    @Resource
+    private CommentService commentService;
 
     @GetMapping("/selectPage")
     public Result selectPage(@RequestParam(defaultValue = "1") Integer pageNum,
@@ -93,6 +97,8 @@ public class CourseController {
         writer.addHeaderAlias("tno", "任课教师编号");
         writer.addHeaderAlias("ccredit", "课程学分");
         writer.addHeaderAlias("cdescribe", "课程描述");
+        writer.addHeaderAlias("cday", "星期");
+        writer.addHeaderAlias("ctime", "节数");
 
 
         writer.write(courseList, true);
@@ -114,10 +120,33 @@ public class CourseController {
         reader.addHeaderAlias("任课教师编号", "tno");
         reader.addHeaderAlias("课程学分", "ccredit");
         reader.addHeaderAlias("课程描述", "cdescribe");
+        reader.addHeaderAlias("星期", "cday");
+        reader.addHeaderAlias("节数", "ctime");
         List<Course> courseList = reader.readAll(Course.class);
         for (Course course : courseList) {
             courseService.addCourseInfo(course);
         }
+        return Result.success();
+    }
+
+    @GetMapping("/{cno}")
+    public Result getCourseByCNO(@PathVariable String cno) {
+        System.out.println("cno:" + cno);
+        Course course = courseService.selectByCNO(cno);
+        return Result.success(course);
+    }
+
+    @GetMapping("/selectComments")
+    public Result getComments(@RequestParam(defaultValue = "1") Integer pageNum,
+                              @RequestParam(defaultValue = "5") Integer pageSize,
+                              Comment comment) {
+        PageInfo<Comment> comments = commentService.selectPage(pageNum, pageSize, comment);
+        return Result.success(comments);
+    }
+
+    @PostMapping("/addComment")
+    public Result addComment(@RequestBody Comment comment) {
+        commentService.insert(comment);
         return Result.success();
     }
 }

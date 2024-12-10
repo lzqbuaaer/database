@@ -27,10 +27,11 @@
         <el-table-column label="学号" prop="sno" v-if="data.user.role!=='STUDENT'"></el-table-column>
         <el-table-column label="学生名称" prop="sname" v-if="data.user.role!=='STUDENT'"></el-table-column>
         <el-table-column label="成绩" prop="grade" v-if="true"></el-table-column>
-        <el-table-column label="操作" align="center" width="160">
+        <el-table-column label="操作" align="center" width="300">
           <template v-slot="scope">
             <el-button type="danger" @click="del(scope.row)">退课</el-button>
             <el-button type="primary" @click="addGrade(scope.row)" v-if="data.user.role!=='STUDENT'">打分</el-button>
+            <el-button type="info" @click="goToCoursePage(scope.row.cno)">课程详情</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -71,7 +72,9 @@ import {reactive} from "vue";
 import {ElMessage, ElMessageBox} from "element-plus";
 import axios from "axios";
 import {Search} from "@element-plus/icons-vue";
+import {useRouter} from 'vue-router';
 
+const router = useRouter();
 const data = reactive({
   pageNum: 1,
   pageSize:10,
@@ -199,4 +202,7 @@ const importSuccess = (res) => {
   }
 }
 
+const goToCoursePage = (cno) => {
+  router.push(`/course/${cno}`)
+}
 </script>

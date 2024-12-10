@@ -101,11 +101,14 @@
 
 <script setup>
 import { useRoute } from 'vue-router'
+import {useRouter} from 'vue-router';
 const $route = useRoute()
+const router = useRouter()
 
 const user=JSON.parse(localStorage.getItem('student-user')||'{}');
 const logout = () => {
   localStorage.removeItem('student-user')
+  router.push(`/login`)
 }
 </script>
 

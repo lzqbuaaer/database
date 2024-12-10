@@ -26,16 +26,16 @@
         <el-table-column label="课程名称" prop="cname"></el-table-column>
         <el-table-column label="任课教师编号" prop="tno"></el-table-column>
         <el-table-column label="课程学分" prop="ccredit"></el-table-column>
-        <el-table-column label="课程描述" prop="cdescribe"></el-table-column>
         <el-table-column label="时间" align="center">
           <template #default="scope">
             {{ data.weekDays[scope.row.cday - 1] }}-第{{ scope.row.ctime }}大节
           </template>
         </el-table-column>
-        <el-table-column label="操作" align="center" width="160">
+        <el-table-column label="操作" align="center" width="300">
           <template v-slot="scope">
             <el-button type="primary" @click="handleEdit(scope.row)" v-if="user.role!=='TEACHER'">编辑</el-button>
             <el-button type="danger" @click="handleDelete(scope.row.cno)" v-if="user.role!=='TEACHER'">删除</el-button>
+            <el-button type="info" @click="goToCoursePage(scope.row.cno)">课程详情</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -62,7 +62,7 @@
           <el-input v-model="data.form.ccredit" autocomplete="off"/>
         </el-form-item>
         <el-form-item label="课程描述" prop="cdescribe">
-          <el-input v-model="data.form.cdescribe" autocomplete="off"/>
+          <el-input type="textarea" :rows="4" v-model="data.form.cdescribe" autocomplete="off"/>
         </el-form-item>
         <el-form-item label="星期：" prop="cday">
           <el-select v-model="data.form.cday">
@@ -100,8 +100,10 @@ import {reactive} from "vue";
 import {ElMessage, ElMessageBox} from "element-plus";
 import axios from "axios";
 import {Search} from "@element-plus/icons-vue";
+import {useRouter} from 'vue-router';
 
 const user = JSON.parse(localStorage.getItem('student-user') || '{}');
+const router = useRouter();
 const data = reactive({
   pageNum: 1,
   pageSize: 10,
@@ -218,5 +220,9 @@ const reset = () => {
   data.cno = '';
   data.tno = '';
   load();
+}
+
+const goToCoursePage = (cno) => {
+  router.push(`/course/${cno}`)
 }
 </script>

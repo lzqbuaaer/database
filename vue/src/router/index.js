@@ -23,6 +23,13 @@ const router = createRouter({
                     name: 'StudentCourseInfo',
                     component: () => import('@/views/manager/StudentCourseInfo.vue')
                 },
+                // 动态课程主页路由
+                {
+                    path: 'course/:cno',
+                    name: 'CourseHome',
+                    component: () => import('@/views/manager/CourseHome.vue'),
+                    props: true, // 将路由参数作为 prop 传递到组件
+                },
             ]
         },
         {
