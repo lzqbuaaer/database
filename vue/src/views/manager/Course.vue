@@ -14,10 +14,10 @@
 
     <div class="card" style="margin-bottom: 10px">
       <div style="margin-bottom: 10px">
-        <el-button type="primary" @click="handleAdd">新增</el-button>
+        <el-button type="primary" @click="handleAdd" v-if="user.role!=='TEACHER'">新增</el-button>
         <el-button type="success" @click="exportData">导出</el-button>
         <el-upload style="display: inline-block; margin-left:10px" action="http://localhost:9090/course/import"
-                   :show-file-list="false" :on-success="importSuccess">
+                   :show-file-list="false" :on-success="importSuccess" v-if="user.role!=='TEACHER'">
           <el-button type="info">导入</el-button>
         </el-upload>
       </div>
@@ -34,8 +34,8 @@
         </el-table-column>
         <el-table-column label="操作" align="center" width="160">
           <template v-slot="scope">
-            <el-button type="primary" @click="handleEdit(scope.row)">编辑</el-button>
-            <el-button type="danger" @click="handleDelete(scope.row.cno)">删除</el-button>
+            <el-button type="primary" @click="handleEdit(scope.row)" v-if="user.role!=='TEACHER'">编辑</el-button>
+            <el-button type="danger" @click="handleDelete(scope.row.cno)" v-if="user.role!=='TEACHER'">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
