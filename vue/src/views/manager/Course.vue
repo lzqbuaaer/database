@@ -7,7 +7,7 @@
       <el-input style="width: 300px; margin-right: 10px" v-model="data.cno" placeholder="请输入课程号查询"
                 :prefix-icon="Search"/>
       <el-input style="width: 300px; margin-right: 10px" v-model="data.tno" placeholder="请输入教师编号查询"
-                :prefix-icon="Search"/>
+                :prefix-icon="Search" v-if="user.role!=='TEACHER'"/>
       <el-button type="primary" @click="load">查询</el-button>
       <el-button type="info" style="margin: 0 10px" @click="reset">重置</el-button>
     </div>
@@ -75,7 +75,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="课程节号：" prop="ctime">
-          <el-select v-model="data.form.ctime" >
+          <el-select v-model="data.form.ctime">
             <el-option label="1" value="1"/>
             <el-option label="2" value="2"/>
             <el-option label="3" value="3"/>
@@ -127,7 +127,7 @@ const load = () => {
       userRole: data.userRole,
       cname: data.cname,
       cno: data.cno,
-      tno: data.tno,
+      tno: data.userRole === "TEACHER" ? user.username : data.tno,
 
     }
   }).then(res => {
@@ -151,7 +151,7 @@ const exportData = () => {
   const params = new URLSearchParams({
     cname: data.cname || '',  // 课程名称
     cno: data.cno || '',      // 课程编号
-    tno: data.tno || ''       // 教师编号
+    tno: data.userRole === "TEACHER" ? user.username : data.tno,      // 教师编号
   });
 
   // 打开导出链接，传递查询参数

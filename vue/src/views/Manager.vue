@@ -41,7 +41,7 @@
               <el-icon><Memo /></el-icon>
               <span>课程管理</span>
             </template>
-            <el-menu-item index="/course" v-if="user.role==='ADMIN'">
+            <el-menu-item index="/course" v-if="user.role!=='STUDENT'">
               <el-icon><Document /></el-icon>
               <span>课程信息</span>
             </el-menu-item>
