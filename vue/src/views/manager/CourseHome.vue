@@ -77,7 +77,6 @@ onMounted(() => {
 
 const load = () => {
   axios.get(`http://localhost:9090/course/${data.cno}`).then(res => {
-    ElMessage.success('查询完成！');
     data.course = res.data.data;
   });
 };
