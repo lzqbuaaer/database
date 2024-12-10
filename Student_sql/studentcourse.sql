@@ -11,7 +11,7 @@
  Target Server Version : 80039 (8.0.39)
  File Encoding         : 65001
 
- Date: 09/12/2024 23:15:29
+ Date: 10/12/2024 20:43:30
 */
 
 SET NAMES utf8mb4;
@@ -31,7 +31,7 @@ CREATE TABLE `studentcourse`  (
   INDEX `sno`(`sno` ASC) USING BTREE,
   CONSTRAINT `cno` FOREIGN KEY (`cno`) REFERENCES `tbcourse` (`cno`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `sno` FOREIGN KEY (`sno`) REFERENCES `tbstudent` (`sno`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 48 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 49 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of studentcourse
@@ -57,6 +57,7 @@ INSERT INTO `studentcourse` VALUES (38, 'S01', 'C01', 88.0);
 INSERT INTO `studentcourse` VALUES (44, 'S03', 'C01', 96.5);
 INSERT INTO `studentcourse` VALUES (45, 'S01', 'C02', 0.0);
 INSERT INTO `studentcourse` VALUES (47, 'S01', 'C07', 0.0);
+INSERT INTO `studentcourse` VALUES (48, 'S01', 'C08', 0.0);
 
 -- ----------------------------
 -- Triggers structure for table studentcourse
