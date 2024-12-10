@@ -23,4 +23,7 @@ public interface CourseMapper {
 
     @Select("select * from student.tbcourse where cno = #{cno}")
     public List<Course> selectByCNO(String cno);
+
+    @Select("select * from student.tbcourse where tno = #{tno}")
+    public List<Course> selectByTNO(String tno);
 }

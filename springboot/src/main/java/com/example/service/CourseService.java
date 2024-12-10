@@ -11,18 +11,28 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
+
 @Transactional
 @Service
 public class CourseService {
     @Resource
     private CourseMapper courseMapper;
+
     //PageInfo框架的分页查询方法
-    public PageInfo<Course> selectPage(Integer pageNum,Integer pageSize,Course course){  //pageNum 当前的页码 pageSize 每页的个数
-        PageHelper.startPage(pageNum,pageSize);
-        List<Course> courseList= courseMapper.selectAll(course);
+    public PageInfo<Course> selectPage(Integer pageNum, Integer pageSize, Course course) {  //pageNum 当前的页码 pageSize 每页的个数
+        PageHelper.startPage(pageNum, pageSize);
+        List<Course> courseList = courseMapper.selectAll(course);
         return PageInfo.of(courseList);
     }
-    public void addCourseInfo(Course course){
+
+    public PageInfo<Course> selectPageByTno(Integer pageNum, Integer pageSize, Course course) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<Course> courseList = courseMapper.selectByTNO(course.getTno());
+        System.out.println("tno" + course.getTno());
+        return PageInfo.of(courseList);
+    }
+
+        public void addCourseInfo(Course course) {
         if (courseMapper.existsByCNO(course.getCno()) > 0) {
             throw new CustomException("课程编号冲突");
         } else {
@@ -30,10 +40,11 @@ public class CourseService {
         }
     }
 
-    public void updateByCNO(Course course){
+    public void updateByCNO(Course course) {
         courseMapper.updateByCNO(course);
     }
-    public void deleteByCNO(String cno){
+
+    public void deleteByCNO(String cno) {
         courseMapper.deleteByCNO(cno);
     }
 

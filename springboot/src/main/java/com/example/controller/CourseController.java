@@ -36,7 +36,13 @@ public class CourseController {
                              @RequestParam(defaultValue = "") String username,
                              @RequestParam(defaultValue = "") String userRole,
                              Course course) {
-        PageInfo<Course> pageInfo = courseService.selectPage(pageNum, pageSize, course);
+        PageInfo<Course> pageInfo;
+        if ("TEACHER".equals(userRole)) {
+            pageInfo = courseService.selectPageByTno(pageNum, pageSize, course);
+        } else {
+            pageInfo = courseService.selectPage(pageNum, pageSize, course);
+        }
+        System.out.println("userRole:" + userRole);
         //添加日志
         Log log = new Log(username, userRole, "select * from student.tbcourse where cname like concat('%'," + course.getCname() + ",'%') and cno like concat('%'," + course.getCno() + ",'%') and tno like concat('%'," + course.getTno() + ",'%') order by id desc");
         logService.add(log);

@@ -7,17 +7,17 @@
       <el-input style="width: 300px; margin-right: 10px" v-model="data.cno" placeholder="请输入课程号查询"
                 :prefix-icon="Search"/>
       <el-input style="width: 300px; margin-right: 10px" v-model="data.tno" placeholder="请输入教师编号查询"
-                :prefix-icon="Search"/>
+                :prefix-icon="Search" v-if="user.role!=='TEACHER'"/>
       <el-button type="primary" @click="load">查询</el-button>
       <el-button type="info" style="margin: 0 10px" @click="reset">重置</el-button>
     </div>
 
     <div class="card" style="margin-bottom: 10px">
       <div style="margin-bottom: 10px">
-        <el-button type="primary" @click="handleAdd">新增</el-button>
+        <el-button type="primary" @click="handleAdd" v-if="user.role!=='TEACHER'">新增</el-button>
         <el-button type="success" @click="exportData">导出</el-button>
         <el-upload style="display: inline-block; margin-left:10px" action="http://localhost:9090/course/import"
-                   :show-file-list="false" :on-success="importSuccess">
+                   :show-file-list="false" :on-success="importSuccess" v-if="user.role!=='TEACHER'">
           <el-button type="info">导入</el-button>
         </el-upload>
       </div>
@@ -29,13 +29,13 @@
         <el-table-column label="课程描述" prop="cdescribe"></el-table-column>
         <el-table-column label="时间" align="center">
           <template #default="scope">
-            星期{{ scope.row.cday }}-第{{ scope.row.ctime }}节
+            {{ data.weekDays[scope.row.cday - 1] }}-第{{ scope.row.ctime }}大节
           </template>
         </el-table-column>
         <el-table-column label="操作" align="center" width="160">
           <template v-slot="scope">
-            <el-button type="primary" @click="handleEdit(scope.row)">编辑</el-button>
-            <el-button type="danger" @click="handleDelete(scope.row.cno)">删除</el-button>
+            <el-button type="primary" @click="handleEdit(scope.row)" v-if="user.role!=='TEACHER'">编辑</el-button>
+            <el-button type="danger" @click="handleDelete(scope.row.cno)" v-if="user.role!=='TEACHER'">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -75,7 +75,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="课程节号：" prop="ctime">
-          <el-select v-model="data.form.ctime" >
+          <el-select v-model="data.form.ctime">
             <el-option label="1" value="1"/>
             <el-option label="2" value="2"/>
             <el-option label="3" value="3"/>
@@ -127,7 +127,7 @@ const load = () => {
       userRole: data.userRole,
       cname: data.cname,
       cno: data.cno,
-      tno: data.tno,
+      tno: data.userRole === "TEACHER" ? user.username : data.tno,
 
     }
   }).then(res => {
@@ -151,7 +151,7 @@ const exportData = () => {
   const params = new URLSearchParams({
     cname: data.cname || '',  // 课程名称
     cno: data.cno || '',      // 课程编号
-    tno: data.tno || ''       // 教师编号
+    tno: data.userRole === "TEACHER" ? user.username : data.tno,      // 教师编号
   });
 
   // 打开导出链接，传递查询参数
