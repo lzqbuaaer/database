@@ -1,17 +1,17 @@
 /*
- Navicat Premium Dump SQL
+ Navicat Premium Data Transfer
 
- Source Server         : localhost
+ Source Server         : localhost_3306
  Source Server Type    : MySQL
- Source Server Version : 80039 (8.0.39)
+ Source Server Version : 80040
  Source Host           : localhost:3306
  Source Schema         : student
 
  Target Server Type    : MySQL
- Target Server Version : 80039 (8.0.39)
+ Target Server Version : 80040
  File Encoding         : 65001
 
- Date: 09/12/2024 23:15:44
+ Date: 11/12/2024 20:03:10
 */
 
 SET NAMES utf8mb4;
@@ -30,6 +30,7 @@ CREATE TABLE `tbcourse`  (
   `cdescribe` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL,
   `cday` int NULL DEFAULT NULL,
   `ctime` int NULL DEFAULT NULL,
+  `cclassroom` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`, `cno`) USING BTREE,
   INDEX `tno`(`tno` ASC) USING BTREE,
   INDEX `cno`(`cno` ASC) USING BTREE,
@@ -39,13 +40,13 @@ CREATE TABLE `tbcourse`  (
 -- ----------------------------
 -- Records of tbcourse
 -- ----------------------------
-INSERT INTO `tbcourse` VALUES (1, 'C01', 'T01', '高等数学', 3.0, '高等数学上', 1, 1);
-INSERT INTO `tbcourse` VALUES (2, 'C02', 'T02', 'C语言程序设计', 3.0, 'c语言', 2, 2);
-INSERT INTO `tbcourse` VALUES (4, 'C03', 'T02', '计算机网络', 3.0, '计网12345', 3, 1);
-INSERT INTO `tbcourse` VALUES (5, 'C04', 'T01', '数据结构', 5.0, '数据结构与算法C++', 4, 2);
-INSERT INTO `tbcourse` VALUES (7, 'C05', 'T01', '计算机操作系统', 4.0, '123456', 5, 3);
-INSERT INTO `tbcourse` VALUES (26, 'C07', 'T02', '数据库', 4.0, '123', 4, 4);
-INSERT INTO `tbcourse` VALUES (27, 'C08', 'T01', '数据库', 4.0, '1234', 4, 3);
+INSERT INTO `tbcourse` VALUES (1, 'C01', 'T01', '高等数学', 3.0, '高等数学上', 1, 1, 'J0-001');
+INSERT INTO `tbcourse` VALUES (2, 'C02', 'T02', 'C语言程序设计', 3.0, 'c语言', 2, 2, 'J0-001');
+INSERT INTO `tbcourse` VALUES (4, 'C03', 'T02', '计算机网络', 3.0, '计网12345', 3, 1, 'J0-001');
+INSERT INTO `tbcourse` VALUES (5, 'C04', 'T01', '数据结构', 5.0, '数据结构与算法C++', 4, 2, 'J0-001');
+INSERT INTO `tbcourse` VALUES (7, 'C05', 'T01', '计算机操作系统', 4.0, '123456', 5, 3, 'J0-002');
+INSERT INTO `tbcourse` VALUES (26, 'C07', 'T02', '数据库', 4.0, '123', 4, 4, 'J0-003');
+INSERT INTO `tbcourse` VALUES (27, 'C08', 'T01', '数据库', 4.0, '1234', 4, 3, 'J1-004');
 
 -- ----------------------------
 -- Triggers structure for table tbcourse
@@ -100,6 +101,33 @@ delimiter ;
 DROP TRIGGER IF EXISTS `delete`;
 delimiter ;;
 CREATE TRIGGER `delete` BEFORE DELETE ON `tbcourse` FOR EACH ROW DELETE FROM studentcourse WHERE cno = OLD.cno
+;
+;;
+delimiter ;
+
+-- ----------------------------
+-- Triggers structure for table tbcourse
+-- ----------------------------
+DROP TRIGGER IF EXISTS `check_course_classroom_before_insert`;
+delimiter ;;
+CREATE TRIGGER `check_course_classroom_before_insert` BEFORE INSERT ON `tbcourse` FOR EACH ROW BEGIN
+    -- 检查是否有相同的 cday, ctime, 和 cclassroom 的记录
+    DECLARE classroom_count INT;
+
+    -- 查询数据库中是否已有相同 cday, ctime 和 cclassroom 的记录
+    SELECT COUNT(*)
+    INTO classroom_count
+    FROM tbcourse
+    WHERE cday = NEW.cday
+      AND ctime = NEW.ctime
+      AND cclassroom = NEW.cclassroom;
+
+    -- 如果已经存在，触发错误，阻止插入
+    IF classroom_count > 0 THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Error: Classroom is already booked for this day and time';
+    END IF;
+END
 ;;
 delimiter ;
 

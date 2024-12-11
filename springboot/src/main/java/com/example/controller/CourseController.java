@@ -59,7 +59,7 @@ public class CourseController {
                                 @RequestParam(defaultValue = "") String userRole) {
         courseService.addCourseInfo(course);
         //添加日志
-        Log log = new Log(username, userRole, "insert into student.tbcourse(cno, tno, cname, ccredit, cdescribe, cday, ctime) values(" + course.getCno() + "," + course.getTno() + "," + course.getCname() + "," + course.getCcredit() + "," + course.getCdescribe() + "," + course.getCday() + "," + course.getCtime() + ")");
+        Log log = new Log(username, userRole, "insert into student.tbcourse(cno, tno, cname, ccredit, cdescribe, cday, ctime, cclassroom) values(" + course.getCno() + "," + course.getTno() + "," + course.getCname() + "," + course.getCcredit() + "," + course.getCdescribe() + "," + course.getCday() + "," + course.getCtime() + ")");
         logService.add(log);
         return Result.success();
     }
@@ -70,7 +70,7 @@ public class CourseController {
             , @RequestParam(defaultValue = "") String userRole) {
         courseService.updateByCNO(course);
         //添加日志
-        Log log = new Log(username, userRole, "update student.tbcourse set cno=" + course.getCno() + " ,tno=" + course.getTno() + " ,cname=" + course.getCname() + ",ccredit=" + course.getCcredit() + ",cdescribe=" + course.getCdescribe() + ",cday=" + course.getCday() + ",ctime=" + course.getCtime() + " where cno=" + course.getCno());
+        Log log = new Log(username, userRole, "update student.tbcourse set cno=" + course.getCno() + " ,tno=" + course.getTno() + " ,cname=" + course.getCname() + ",ccredit=" + course.getCcredit() + ",cdescribe=" + course.getCdescribe() + ",cday=" + course.getCday() + ",ctime=" + course.getCtime() + ",cclassroom=" + course.getCclassroom() + " where cno=" + course.getCno());
         logService.add(log);
         return Result.success();
     }
@@ -99,6 +99,7 @@ public class CourseController {
         writer.addHeaderAlias("cdescribe", "课程描述");
         writer.addHeaderAlias("cday", "星期");
         writer.addHeaderAlias("ctime", "节数");
+        writer.addHeaderAlias("cclassroom", "教室");
 
 
         writer.write(courseList, true);
@@ -122,6 +123,7 @@ public class CourseController {
         reader.addHeaderAlias("课程描述", "cdescribe");
         reader.addHeaderAlias("星期", "cday");
         reader.addHeaderAlias("节数", "ctime");
+        reader.addHeaderAlias("教室", "cclassroom");
         List<Course> courseList = reader.readAll(Course.class);
         for (Course course : courseList) {
             courseService.addCourseInfo(course);

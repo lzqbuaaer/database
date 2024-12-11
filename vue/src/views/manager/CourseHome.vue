@@ -10,6 +10,7 @@
         <p><strong>任课教师编号：</strong>{{ data.course.tno }}</p>
         <p><strong>课程学分：</strong>{{ data.course.ccredit }}</p>
         <p><strong>上课时间：</strong>{{ data.weekDays[data.course.cday - 1] }} - 第{{ data.course.ctime }}大节</p>
+        <p><strong>教室：</strong>{{ data.course.cclassroom }}</p>
         <p><strong>课程描述：</strong>{{ data.course.cdescribe }}</p>
       </el-card>
 

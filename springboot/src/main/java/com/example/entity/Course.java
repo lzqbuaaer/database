@@ -9,6 +9,7 @@ public class Course {
     private String cdescribe;
     private Integer cday;
     private Integer ctime;
+    private String cclassroom;
 
     @Override
     public String toString() {
@@ -21,6 +22,7 @@ public class Course {
                 ", cdescribe='" + cdescribe + '\'' +
                 ", cday='" + cday + '\'' +
                 ", ctime='" + ctime + '\'' +
+                ", cclassroom='" + cclassroom + '\'' +
                 '}';
     }
 
@@ -84,4 +86,13 @@ public class Course {
     public void setCtime(Integer ctime) {
         this.ctime = ctime;
     }
+
+    public void setCclassroom(String cclassroom) {
+        this.cclassroom = cclassroom;
+    }
+
+    public String getCclassroom() {
+        return cclassroom;
+    }
+
 }

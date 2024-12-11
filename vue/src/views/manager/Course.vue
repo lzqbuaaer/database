@@ -31,6 +31,7 @@
             {{ data.weekDays[scope.row.cday - 1] }}-第{{ scope.row.ctime }}大节
           </template>
         </el-table-column>
+        <el-table-column label="教室" prop="cclassroom"></el-table-column>
         <el-table-column label="操作" align="center" width="300">
           <template v-slot="scope">
             <el-button type="primary" @click="handleEdit(scope.row)" v-if="user.role!=='TEACHER'">编辑</el-button>
@@ -83,6 +84,9 @@
             <el-option label="5" value="5"/>
           </el-select>
         </el-form-item>
+        <el-form-item label="教室" prop="cclassroom">
+          <el-input v-model="data.form.cclassroom" autocomplete="off"/>
+        </el-form-item>
       </el-form>
       <template #footer>
       <span class="dialog-footer">
@@ -118,7 +122,8 @@ const data = reactive({
   form: {},
   tableData: [],
   total: 0,
-  weekDays: ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日']
+  weekDays: ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日'],
+  cclassroom: ''
 })
 const load = () => {
   axios.get('http://localhost:9090/course/selectPage', {
@@ -130,7 +135,7 @@ const load = () => {
       cname: data.cname,
       cno: data.cno,
       tno: data.userRole === "TEACHER" ? user.username : data.tno,
-
+      cclassroom: data.cclassroom
     }
   }).then(res => {
     console.log(res.data.data);
@@ -153,6 +158,7 @@ const exportData = () => {
     cname: data.cname || '',  // 课程名称
     cno: data.cno || '',      // 课程编号
     tno: data.userRole === "TEACHER" ? user.username : data.tno,      // 教师编号
+    cclassroom: data.cclassroom || ''   // 教室名称
   });
 
   // 打开导出链接，传递查询参数
@@ -218,6 +224,7 @@ const reset = () => {
   data.cname = '';
   data.cno = '';
   data.tno = '';
+  data.cclassroom = '';
   load();
 }
 

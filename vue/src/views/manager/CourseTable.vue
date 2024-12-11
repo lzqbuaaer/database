@@ -19,6 +19,7 @@
             <div  v-if="scope.row.mon">
               <div style="margin: 10px 0">{{ scope.row.mon.course.cname }}</div>
               <div style="margin: 10px 0">{{ scope.row.mon.teacher.tname }}</div>
+              <div style="margin: 10px 0">{{ scope.row.mon.course.cclassroom }}</div>
             </div>
           </template>
         </el-table-column>
@@ -27,6 +28,7 @@
             <div  v-if="scope.row.tue">
               <div style="margin: 10px 0">{{ scope.row.tue.course.cname }}</div>
               <div style="margin: 10px 0">{{ scope.row.tue.teacher.tname }}</div>
+              <div style="margin: 10px 0">{{ scope.row.tue.course.cclassroom }}</div>
             </div>
           </template>
         </el-table-column>
@@ -35,6 +37,7 @@
             <div  v-if="scope.row.wed">
               <div style="margin: 10px 0">{{ scope.row.wed.course.cname }}</div>
               <div style="margin: 10px 0">{{ scope.row.wed.teacher.tname }}</div>
+              <div style="margin: 10px 0">{{ scope.row.wed.course.cclassroom }}</div>
             </div>
           </template>
         </el-table-column>
@@ -43,6 +46,7 @@
             <div  v-if="scope.row.thu">
               <div style="margin: 10px 0">{{ scope.row.thu.course.cname }}</div>
               <div style="margin: 10px 0">{{ scope.row.thu.teacher.tname }}</div>
+              <div style="margin: 10px 0">{{ scope.row.thu.course.cclassroom }}</div>
             </div>
           </template>
         </el-table-column>
@@ -51,6 +55,7 @@
             <div  v-if="scope.row.fri">
               <div style="margin: 10px 0">{{ scope.row.fri.course.cname }}</div>
               <div style="margin: 10px 0">{{ scope.row.fri.teacher.tname }}</div>
+              <div style="margin: 10px 0">{{ scope.row.fri.course.cclassroom }}</div>
             </div>
           </template>
         </el-table-column>
@@ -58,7 +63,8 @@
           <template v-slot="scope">
             <div  v-if="scope.row.sat">
               <div style="margin: 10px 0">{{ scope.row.sat.course.cname }}</div>
-              <div style="margin: 10px 0">{{ scope.row.mon.teacher.tname }}</div>
+              <div style="margin: 10px 0">{{ scope.row.sat.teacher.tname }}</div>
+              <div style="margin: 10px 0">{{ scope.row.sat.course.cclassroom }}</div>
             </div>
           </template>
         </el-table-column>
@@ -67,6 +73,7 @@
             <div  v-if="scope.row.sun">
               <div style="margin: 10px 0">{{ scope.row.sun.course.cname }}</div>
               <div style="margin: 10px 0">{{ scope.row.sun.teacher.tname }}</div>
+              <div style="margin: 10px 0">{{ scope.row.sun.course.cclassroom }}</div>
             </div>
           </template>
         </el-table-column>

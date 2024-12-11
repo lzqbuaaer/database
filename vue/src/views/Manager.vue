@@ -57,6 +57,10 @@
               <el-icon><Document /></el-icon>
               <span>课程表</span>
             </el-menu-item>
+            <el-menu-item index="/coursetable" v-if="user.role==='TEACHER'">
+              <el-icon><Document /></el-icon>
+              <span>课程表</span>
+            </el-menu-item>
           </el-sub-menu>
           <el-sub-menu index="4" v-if="user.role==='ADMIN'">
             <template #title>

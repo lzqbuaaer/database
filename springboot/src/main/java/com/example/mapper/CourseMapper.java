@@ -11,9 +11,9 @@ import java.util.List;
 public interface CourseMapper {
     @Select("select * from student.tbcourse where cname like concat('%',#{cname},'%') and cno like concat('%',#{cno},'%') and tno like concat('%',#{tno},'%') order by id desc ")
     public List<Course> selectAll(Course course);
-    @Insert("insert into student.tbcourse(cno, tno, cname, ccredit, cdescribe, cday, ctime) values(#{cno},#{tno},#{cname},#{ccredit},#{cdescribe},#{cday},#{ctime})")
+    @Insert("insert into student.tbcourse(cno, tno, cname, ccredit, cdescribe, cday, ctime, cclassroom) values(#{cno},#{tno},#{cname},#{ccredit},#{cdescribe},#{cday},#{ctime},#{cclassroom})")
     void insertCourse(Course course);
-    @Update("update student.tbcourse set cno=#{cno} ,tno=#{tno} ,cname=#{cname},ccredit=#{ccredit},cdescribe=#{cdescribe},cday=#{cday},ctime=#{ctime} where cno=#{cno}")
+    @Update("update student.tbcourse set cno=#{cno} ,tno=#{tno} ,cname=#{cname},ccredit=#{ccredit},cdescribe=#{cdescribe},cday=#{cday},ctime=#{ctime},cclassroom=#{cclassroom} where cno=#{cno}")
     void updateByCNO(Course course);
     @Delete("delete from student.tbcourse where cno=#{cno}")
     void deleteByCNO(String cno);
