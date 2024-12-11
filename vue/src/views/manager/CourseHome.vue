@@ -18,7 +18,10 @@
         <div v-if="data.comments.length > 0">
           <el-divider>讨论内容</el-divider>
           <div v-for="comment in data.comments" :key="comment.id" class="comment-item">
-            <p><strong>{{ comment.userName }}:</strong> {{ comment.content }}</p>
+            <p><strong>{{ comment.userName }}:</strong></p>
+            <!-- 分别打印评分星数和评价内容 -->
+            <p>{{ comment.content.split('评价：')[0] }}</p>
+            <p>{{ comment.content.split('评价：')[1] }}</p>
             <p><small class="comment-time">发表于：{{ comment.time }}</small></p>
           </div>
         </div>
@@ -36,7 +39,16 @@
             class="comment-input"
         ></el-input>
 
+        <el-divider>为本课程评分</el-divider>
+        <el-rate
+            v-model="rateValue"
+            clearable
+            :texts="['oops', 'disappointed', 'normal', 'good', 'great']"
+            :colors="['#FF9900','#409eff', '#67c23a']"
+            show-text
+        />
         <!-- 提交按钮 -->
+        <el-divider></el-divider>
         <el-button
             type="primary"
             @click="submitComment"
@@ -54,6 +66,9 @@ import {reactive, onMounted} from "vue";
 import {useRoute} from "vue-router";
 import axios from "axios";
 import {ElMessage} from "element-plus";
+import {ref} from 'vue'
+
+const rateValue = ref()
 
 const route = useRoute();
 const user = JSON.parse(localStorage.getItem('student-user') || '{}');
@@ -66,7 +81,7 @@ const data = reactive({
   loading: false, // 控制提交按钮的加载状态
   pageNum: 1,
   pageSize: 5,
-  total : 0,
+  total: 0,
 });
 
 onMounted(() => {
@@ -109,7 +124,7 @@ const submitComment = () => {
     cno: data.cno,
     userId: user.username, // 假设用户信息保存在 localStorage 中
     userName: user.name || '匿名用户',
-    content: data.newComment,
+    content: '评分：' + ((rateValue.value === 0) ? '未评分' : rateValue.value + '星') + '  ' + '评价：' + data.newComment,
     time: new Date().toLocaleString(),
   }).then(res => {
     ElMessage.success('评论提交成功！');

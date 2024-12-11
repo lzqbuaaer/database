@@ -34,17 +34,8 @@ CREATE TABLE `comment`  (
 -- ----------------------------
 -- Records of comment
 -- ----------------------------
-INSERT INTO `comment` VALUES (1, 'C08', 'admin', '管理员', '数据库', '2024/12/10 19:48:49');
-INSERT INTO `comment` VALUES (2, 'C04', 'T01', '李一', '数据结构', '2024/12/10 20:04:13');
-INSERT INTO `comment` VALUES (3, 'C04', 'T01', '李一', '第二次测试', '2024/12/10 20:05:50');
-INSERT INTO `comment` VALUES (4, 'C04', 'T01', '李一', '第三次测试', '2024/12/10 20:07:08');
-INSERT INTO `comment` VALUES (5, 'C08', 'admin', '管理员', '第二次测试', '2024/12/10 20:08:39');
-INSERT INTO `comment` VALUES (6, 'C08', 'admin', '管理员', '第三次测试', '2024/12/10 20:11:18');
-INSERT INTO `comment` VALUES (7, 'C08', 'admin', '管理员', '第四个', '2024/12/10 20:21:27');
-INSERT INTO `comment` VALUES (8, 'C08', 'admin', '管理员', '第五个', '2024/12/10 20:33:01');
-INSERT INTO `comment` VALUES (9, 'C08', 'admin', '管理员', '第六个', '2024/12/10 20:33:09');
-INSERT INTO `comment` VALUES (10, 'C04', 'S01', '学生一', '学生测试', '2024/12/10 20:36:59');
-INSERT INTO `comment` VALUES (11, 'C08', 'S01', '学生一', '学生测试', '2024/12/10 20:37:34');
-INSERT INTO `comment` VALUES (12, 'C08', 'S01', '学生一', '学生测试2', '2024/12/10 20:37:41');
+INSERT INTO `comment` VALUES (1, 'C08', 'admin', '管理员', '评分：未评分 评价：数据库', '2024/12/10 19:48:49');
+INSERT INTO `comment` VALUES (2, 'C04', 'T01', '李一', '评分：未评分 评价：数据库', '2024/12/10 20:04:13');
+INSERT INTO `comment` VALUES (10, 'C04', 'S01', '学生一', '评分：未评分 评价：数据库', '2024/12/10 20:36:59');
 
 SET FOREIGN_KEY_CHECKS = 1;
