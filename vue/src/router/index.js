@@ -15,11 +15,20 @@ const router = createRouter({
                 {path: 'teacher', name: 'Teacher', component: () => import('@/views/manager/Teacher.vue')},
                 {path: 'person', name: 'Person', component: () => import('@/views/manager/Person.vue')},
                 {path: 'notice', name: 'Notice', component: () => import('@/views/manager/Notice.vue')},
+                {path: 'log', name: 'Log', component: () => import('@/views/manager/Log.vue')},
                 {path: 'courselist', name: 'CourseList', component: () => import('@/views/manager/CourseList.vue')},
+                {path: 'coursetable', name: 'CourseTable', component: () => import('@/views/manager/CourseTable.vue')},
                 {
                     path: 'studentcourseinfo',
                     name: 'StudentCourseInfo',
                     component: () => import('@/views/manager/StudentCourseInfo.vue')
+                },
+                // 动态课程主页路由
+                {
+                    path: 'course/:cno',
+                    name: 'CourseHome',
+                    component: () => import('@/views/manager/CourseHome.vue'),
+                    props: true, // 将路由参数作为 prop 传递到组件
                 },
             ]
         },

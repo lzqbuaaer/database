@@ -3,7 +3,7 @@
     <div style="height: 60px; background-color: #fff; display: flex; align-items: center; border-bottom: 1px solid #ddd">
       <div style="flex: 1">
         <div style="padding-left: 20px; display: flex; align-items: center">
-          <img src="@/assets/imgs/logo.png" alt="" style="width: 40px">
+          <img src="../assets/imgs/logo.png" alt="" style="width: 40px">
           <div style="font-weight: bold; font-size: 24px; margin-left: 5px" v-if="user.role==='ADMIN'">管理员·综合管理系统</div>
           <div style="font-weight: bold; font-size: 24px; margin-left: 5px" v-if="user.role==='TEACHER'">教师·成绩管理系统</div>
           <div style="font-weight: bold; font-size: 24px; margin-left: 5px" v-if="user.role==='STUDENT'">学生·选课系统</div>
@@ -41,7 +41,7 @@
               <el-icon><Memo /></el-icon>
               <span>课程管理</span>
             </template>
-            <el-menu-item index="/course" v-if="user.role==='ADMIN'">
+            <el-menu-item index="/course" v-if="user.role!=='STUDENT'">
               <el-icon><Document /></el-icon>
               <span>课程信息</span>
             </el-menu-item>
@@ -50,8 +50,12 @@
               <span>学生选课</span>
             </el-menu-item>
             <el-menu-item index="/studentcourseinfo">
-              <el-icon><Document /></el-icon>
+              <el-icon><FolderOpened /></el-icon>
               <span>选课记录</span>
+            </el-menu-item>
+            <el-menu-item index="/coursetable" v-if="user.role==='STUDENT'">
+              <el-icon><Document /></el-icon>
+              <span>课程表</span>
             </el-menu-item>
           </el-sub-menu>
           <el-sub-menu index="4" v-if="user.role==='ADMIN'">
@@ -64,12 +68,16 @@
               <span>学生信息</span>
             </el-menu-item>
             <el-menu-item index="/teacher">
-              <el-icon><UserFilled /></el-icon>
+              <el-icon><Avatar /></el-icon>
               <span>教师信息</span>
             </el-menu-item>
             <el-menu-item index="/notice">
               <el-icon><Bell /></el-icon>
               <span>公告信息</span>
+            </el-menu-item>
+            <el-menu-item v-if="user.role==='ADMIN'" index="/log">
+              <el-icon><Comment /></el-icon>
+              <span>操作日志信息</span>
             </el-menu-item>
           </el-sub-menu>
           <el-menu-item index="/person">
@@ -93,11 +101,14 @@
 
 <script setup>
 import { useRoute } from 'vue-router'
+import {useRouter} from 'vue-router';
 const $route = useRoute()
+const router = useRouter()
 
 const user=JSON.parse(localStorage.getItem('student-user')||'{}');
 const logout = () => {
   localStorage.removeItem('student-user')
+  router.push(`/login`)
 }
 </script>
 

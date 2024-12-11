@@ -24,32 +24,45 @@ import java.util.List;
 public class StudentController {
     @Resource
     private StudentService studentService;
+
     @GetMapping("/selectPage")
     public Result selectPage(@RequestParam(defaultValue = "1") Integer pageNum,
                              @RequestParam(defaultValue = "5") Integer pageSize,
-                             Student student){
-        PageInfo<Student> pageInfo=studentService.selectPage(pageNum,pageSize,student);
+                             Student student) {
+        PageInfo<Student> pageInfo = studentService.selectPage(pageNum, pageSize, student);
         return Result.success(pageInfo);
     }
+
     @PostMapping("/addStudentInfo")
-    public Result addStudentInfo(@RequestBody Student student){
+    public Result addStudentInfo(@RequestBody Student student) {
         student.setPassword("62bff9c5b8f865bdd70c588ce84158e0");
         student.setRole("STUDENT");
         studentService.addStudentInfo(student);
         return Result.success();
     }
+
     @PutMapping("/updateBySNO")
-    public Result updateBySNO(@RequestBody Student student){
+    public Result updateBySNO(@RequestBody Student student) {
         studentService.updateBySNO(student);
+        System.out.println(student);
         return Result.success();
     }
+
+    @PutMapping("/updateStudent")
+    public Result updateStudent(@RequestBody Student student) {
+        studentService.updateStudent(student);
+        System.out.println(student);
+        return Result.success();
+    }
+
     @DeleteMapping("deleteBySNO/{username}")
-    public Result deleteBySNO(@PathVariable String username){
+    public Result deleteBySNO(@PathVariable String username) {
         studentService.deleteBySNO(username);
         return Result.success();
     }
+
     @GetMapping("/checkPwd")
-    public  int checkPwd(@RequestBody Account account){
+    public int checkPwd(@RequestBody Account account) {
         return studentService.checkPwd(account);
     }
 

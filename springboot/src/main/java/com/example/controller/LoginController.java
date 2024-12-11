@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 @RestController
 public class LoginController {
@@ -20,20 +21,22 @@ public class LoginController {
     private StudentService studentService;
     @Resource
     private TeacherService teacherService;
+
     @PostMapping("/login")
-    public Result login(@RequestBody Account account){
+    public Result login(@RequestBody Account account, HttpSession session) {
         Account db_Account;
-        if(RoleEnum.ADMIN.name().equals(account.getRole())){
-             db_Account=adminService.login(account);
+        if (RoleEnum.ADMIN.name().equals(account.getRole())) {
+            db_Account = adminService.login(account);
 
         } else if (RoleEnum.STUDENT.name().equals(account.getRole())) {
-             db_Account=studentService.login(account);
+            db_Account = studentService.login(account);
         } else if (RoleEnum.TEACHER.name().equals(account.getRole())) {
-            db_Account=teacherService.login(account);
-        }else{
-            return  Result.error("角色错误！");
+            db_Account = teacherService.login(account);
+        } else {
+            return Result.error("角色错误！");
         }
-
+        System.out.println("db_Account=" + db_Account);
+        session.setAttribute("user", db_Account.getUsername());
         return Result.success(db_Account);
     }
 

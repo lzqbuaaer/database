@@ -58,10 +58,11 @@ const load=()=>{
     params:{
       pageNum:data.pageNum,
       pageSize:data.pageSize,
+      username:data.user.name,
+      userRole:data.user.role,
       cname:data.cname,
       cno:data.cno,
       tno:data.tno,
-
     }
   }).then( res=>{
     console.log(res.data.data);
@@ -74,7 +75,13 @@ const handleCurrentChange=(pageNum)=>{
   load();//点击翻页时重新加载数据
 }
 const handleSelect = (row) => {
-  axios.post('http://localhost:9090/studentCourse/addSC',{sno:data.user.username,cno:row.cno}).then(res=>{
+  axios.post('http://localhost:9090/studentCourse/addSC',{sno:data.user.username,cno:row.cno},
+      {
+        params:{
+          username:data.user.name,
+          userRole:data.user.role,
+        }
+      }).then(res=>{
       if(res.data.code==='200'){
         ElMessage.success('选课成功！');
       }else{
